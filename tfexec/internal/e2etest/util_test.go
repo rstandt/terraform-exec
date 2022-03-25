@@ -20,8 +20,7 @@ import (
 const testFixtureDir = "testdata"
 
 var (
-	showMinVersion = version.Must(version.NewVersion("0.12.0"))
-
+	showMinVersion            = version.Must(version.NewVersion("0.12.0"))
 	providerAddressMinVersion = version.Must(version.NewVersion("0.13.0"))
 )
 
@@ -37,8 +36,24 @@ func runTest(t *testing.T, fixtureName string, cb func(t *testing.T, tfVersion *
 		testutil.Latest_v1,
 		testutil.Latest_v1_1,
 	}
-	if override := os.Getenv("TFEXEC_E2ETEST_VERSIONS"); override != "" {
-		versions = strings.Split(override, ",")
+	if versionsOverride := os.Getenv("TFEXEC_E2ETEST_VERSIONS"); versionsOverride != "" {
+		versions = strings.Split(versionsOverride, ",")
+	}
+
+	if localBinPath := os.Getenv("TFEXEC_E2ETEST_TERRAFORM_PATH"); localBinPath != "" {
+		ltf, err := tfexec.NewTerraform("", localBinPath)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		ltf.SetAppendUserAgent("tfexec-e2etest")
+
+		lVersion, _, err := ltf.Version(context.Background(), false)
+		if err != nil {
+			t.Fatalf("unable to determine version of Terraform binary at %s: %s", localBinPath, err)
+		}
+
+		t.Fatal(lVersion)
 	}
 
 	runTestVersions(t, versions, fixtureName, cb)
