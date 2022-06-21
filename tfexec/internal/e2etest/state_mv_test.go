@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/go-version"
 	tfjson "github.com/hashicorp/terraform-json"
 
-	"github.com/hashicorp/terraform-exec/tfexec"
+	"github.com/rstandt/terraform-exec/tfexec"
 )
 
 func TestStateMv(t *testing.T) {
