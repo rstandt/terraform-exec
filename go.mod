@@ -1,4 +1,4 @@
-module github.com/hashicorp/terraform-exec
+module github.com/rstandt/terraform-exec
 
 go 1.17
 
