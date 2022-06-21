@@ -14,8 +14,8 @@ import (
 
 	"github.com/hashicorp/go-version"
 
-	"github.com/hashicorp/terraform-exec/tfexec"
-	"github.com/hashicorp/terraform-exec/tfexec/internal/testutil"
+	"github.com/rstandt/terraform-exec/tfexec"
+	"github.com/rstandt/terraform-exec/tfexec/internal/testutil"
 )
 
 const testFixtureDir = "testdata"

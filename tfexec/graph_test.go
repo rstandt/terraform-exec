@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/hashicorp/terraform-exec/tfexec/internal/testutil"
+	"github.com/rstandt/terraform-exec/tfexec/internal/testutil"
 )
 
 func TestGraphCmd_v013(t *testing.T) {
