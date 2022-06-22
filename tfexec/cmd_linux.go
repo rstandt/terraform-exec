@@ -2,11 +2,25 @@ package tfexec
 
 import (
 	"context"
+	"io"
 	"os/exec"
 	"strings"
 	"sync"
 	"syscall"
 )
+
+// syncWriter is an io.Writer protected by a sync.Mutex.
+type syncWriter struct {
+	sync.Mutex
+	w io.Writer
+}
+
+// Write implements io.Writer.
+func (w *syncWriter) Write(p []byte) (int, error) {
+	w.Lock()
+	defer w.Unlock()
+	return w.w.Write(p)
+}
 
 func (tf *Terraform) runTerraformCmd(ctx context.Context, cmd *exec.Cmd) error {
 	var errBuf strings.Builder
